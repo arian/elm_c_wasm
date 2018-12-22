@@ -3,6 +3,8 @@
 
 #include "types.h"
 
+Closure Utils_clone;
+
 Closure Utils_eq;
 Closure Utils_access;
 Closure Utils_append;
@@ -19,7 +21,7 @@ Custom Utils_GT;
 
 void* Utils_apply(Closure* c_old, u8 n_applied, void* applied[]);
 Record* Utils_update(Record* r, u32 n_updates, u32 fields[], void* values[]);
-void* Utils_clone(void* x);
+void* Utils_clone_eval(void** args);
 void Utils_init();
 
 #define A1(f,a) CAN_THROW(Utils_apply(f, 1, (void*[]){a}))

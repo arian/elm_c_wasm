@@ -245,7 +245,7 @@ char* gc_mark_compact_test() {
     live[nlive++] = state->heap.start; // stack_empty
 
     // Call the top-level function (an effect callback or incoming port)
-    ElmValue* c1 = (ElmValue*)Utils_clone(mock_effect_callback);
+    ElmValue* c1 = (ElmValue*)A1(&Utils_clone, mock_effect_callback);
     live[nlive++] = state->next_alloc; // the root Cons cell we're about to allocate
     root_mutable_pointer = c1;
     GC_register_root(&root_mutable_pointer); // Effect manager is keeping this Closure alive by connecting it to the GC root.
@@ -266,7 +266,7 @@ char* gc_mark_compact_test() {
     live[nlive] = NEW_ELM_INT(state->stack_depth*100 + nlive + ndead); nlive++;
 
     // Push down to level 2. This will complete. Need its return value
-    Closure* c2 = Utils_clone(mock_closure);
+    Closure* c2 = A1(&Utils_clone, mock_closure);
     live[nlive++] = c2;
     void* push2 = GC_stack_push();
     live[nlive++] = push2;

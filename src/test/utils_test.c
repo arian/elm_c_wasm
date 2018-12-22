@@ -341,15 +341,15 @@ char* test_eq(void) {
     custom_1_1A->values[0] = &one;
     custom_1_1A->values[1] = &a1;
 
-    Custom* custom_1_1A_clone = Utils_clone(custom_1_1A);
+    Custom* custom_1_1A_clone = A1(&Utils_clone, custom_1_1A);
 
-    Custom* custom_2_1A = Utils_clone(custom_1_1A);
+    Custom* custom_2_1A = A1(&Utils_clone, custom_1_1A);
     custom_2_1A->ctor = 2;
 
-    Custom* custom_1_2A = Utils_clone(custom_1_1A);
+    Custom* custom_1_2A = A1(&Utils_clone, custom_1_1A);
     custom_1_2A->values[0] = &two;
 
-    Custom* custom_1_1B = Utils_clone(custom_1_1A);
+    Custom* custom_1_1B = A1(&Utils_clone, custom_1_1A);
     custom_1_1B->values[1] = &b;
 
     mu_assert("Expect: Ctor1 1 'A' == Ctor1 1 'A' (ref)", A2(&Utils_eq, custom_1_1A, custom_1_1A) == &True);
@@ -373,10 +373,10 @@ char* test_eq(void) {
     rec12->values[0] = &one;
     rec12->values[1] = &two;
 
-    Record* rec12a = Utils_clone(rec12);
-    Record* rec22 = Utils_clone(rec12);
+    Record* rec12a = A1(&Utils_clone, rec12);
+    Record* rec22 = A1(&Utils_clone, rec12);
     rec22->values[0] = &two;
-    Record* rec13 = Utils_clone(rec12);
+    Record* rec13 = A1(&Utils_clone, rec12);
     rec13->values[1] = &three;
 
     if (verbose) {

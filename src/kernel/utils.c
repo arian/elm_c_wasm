@@ -11,7 +11,8 @@
 #endif
 
 
-void* Utils_clone(void* x) {
+void* Utils_clone_eval(void* args[1]) {
+    void* x = args[0];
     Header* h = (Header*)x;
     if (h->tag == Tag_Nil || (h->tag == Tag_Custom && custom_params(x) == 1)) {
         return x;
@@ -61,7 +62,7 @@ Closure Utils_access;
 
 
 Record* Utils_update(Record* r, u32 n_updates, u32 fields[], void* values[]) {
-    Record* r_new = Utils_clone(r);
+    Record* r_new = A1(&Utils_clone, r);
     if (r_new == pGcFull) return pGcFull;
 
     for (u32 i=0; i<n_updates; ++i) {
@@ -406,6 +407,7 @@ Closure Utils_ge;
 
 
 void Utils_init() {
+    Utils_clone = F1(Utils_clone_eval);
     Utils_eq = F2(eq_eval);
     Utils_access = F2(access_eval);
     Utils_append = F2(append_eval);
